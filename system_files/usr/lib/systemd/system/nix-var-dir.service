@@ -1,0 +1,13 @@
+[Unit]
+Description=Create the persistent Nix store directory /var/nix
+Documentation=https://github.com/outergod/bazzite-hyprland
+DefaultDependencies=no
+RequiresMountsFor=/var
+After=local-fs-pre.target
+Before=nix.mount
+ConditionPathIsDirectory=!/var/nix
+
+[Service]
+Type=oneshot
+# nix.mount runs before systemd-tmpfiles-setup.service, so apply the rule early
+ExecStart=/usr/bin/systemd-tmpfiles --create /usr/lib/tmpfiles.d/nix-var.conf
