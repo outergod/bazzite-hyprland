@@ -173,6 +173,16 @@ ostree-rechunk $target_image=image_name $tag=default_tag:
 
     GRAPHROOT="$(podman info --format '{{ '{{.Store.GraphRoot}}' }}')"
 
+    # rpm-ostree writes a fresh image config, so carry over the build's labels,
+    # except the ones it regenerates for the rechunked image
+    LABEL_ARGS=()
+    while IFS= read -r label; do
+        LABEL_ARGS+=(--label "${label}")
+    done < <(podman inspect "${target_image}:${tag}" |
+        jq -r '.[0].Labels // {}
+            | del(."containers.bootc", ."ostree.commit", ."ostree.final-diffid")
+            | to_entries[] | "\(.key)=\(.value)"')
+
     podman run --rm --pull=never --privileged \
       --mount=type=image,src="${target_image}:${tag}",target=/rpm-ostree \
       --mount=type=bind,src=${GRAPHROOT},target=/run/host-container-storage,rw \
@@ -184,6 +194,7 @@ ostree-rechunk $target_image=image_name $tag=default_tag:
       --format-version=2 \
       --bootc \
       --rootfs /rpm-ostree \
+      "${LABEL_ARGS[@]}" \
       --output "containers-storage:[overlay@/run/host-container-storage+/run/rpm-ostree-storage]localhost/${target_image}:${tag}"
 
 # Generate Default Tag
