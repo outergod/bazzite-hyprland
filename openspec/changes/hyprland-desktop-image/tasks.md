@@ -10,7 +10,7 @@
 - [x] 2.1 In the hyprland build step, enable the `lionheartp/Hyprland` COPR, install `hyprland`, `hyprlock`, `hypridle`, `xdg-desktop-portal-hyprland`, `hyprpolkitagent` and `uwsm`, then disable the COPR. Verify in the built image that `rpm -q` lists all six packages and that no COPR repo file under `/etc/yum.repos.d/` is enabled.
 - [x] 2.2 Check that the installed packages provide both the uwsm-wrapped and plain Hyprland session entries in `/usr/share/wayland-sessions/`, and add the uwsm entry in `system_files/` if the packages don't ship it. Verify both `.desktop` files exist in the built image.
 - [x] 2.3 Check that `/etc/pam.d/hyprlock` exists in the built image and includes the system auth stack, and ship a minimal one in `system_files/` if it's missing. Verify with `podman run --rm localhost/bazzite-hyprland cat /etc/pam.d/hyprlock`.
-- [ ] 2.4 Confirm no COPR package replaces a Bazzite-provided library (Mesa and the other libraries Bazzite ships its own versions of) by comparing `rpm -qa --qf '%{name} %{vendor}\n'` before and after the hyprland step. Record the result in the PR description.
+- [x] 2.4 Confirm no COPR package replaces a Bazzite-provided library (Mesa and the other libraries Bazzite ships its own versions of) by comparing `rpm -qa --qf '%{name} %{vendor}\n'` before and after the hyprland step. Record the result in the PR description.
 
 ## 3. Login (SDDM)
 
@@ -31,7 +31,7 @@
 ## 5. Image build and CI
 
 - [x] 5.1 Make sure `bootc container lint` passes at the end of the `Containerfile`. Verify `just build` completes without lint errors.
-- [ ] 5.2 Push the branch and open a PR. Verify the "Build container image" workflow succeeds, including the rechunk step.
+- [x] 5.2 Push the branch and open a PR. Verify the "Build container image" workflow succeeds, including the rechunk step.
 
 ## 6. VM validation (system behaviour across tasks 2 to 4)
 
