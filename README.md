@@ -93,7 +93,7 @@ hyprlock uses the `ext-session-lock` protocol, so if it crashes or is killed the
    loginctl terminate-session <session-id>
    ```
 
-3. Log out of the console and switch back with <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F1</kbd> (or <kbd>F2</kbd>).
+3. Log out of the console and switch back with <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F1</kbd> (or <kbd>F2</kbd>). After a restart, Hyprland's "lockdead" message may stay on screen even though the new hyprlock is active: type your password and press <kbd>Enter</kbd> to unlock.
 
 ## Nix
 
