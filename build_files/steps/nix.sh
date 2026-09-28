@@ -2,9 +2,15 @@
 # Native multi-user Nix; the store lives in /var/nix and is bind-mounted at /nix.
 # Sourced by build.sh.
 
+# Bazzite disables weak dependencies, so the packages Fedora's Nix only
+# recommends are listed explicitly: busybox is the build sandbox's /bin/sh
+# (sandbox-paths), and nix-legacy provides nix-env, nix-store,
+# nix-collect-garbage and the other classic commands.
 dnf5 -y install \
+    busybox \
     nix \
     nix-daemon \
+    nix-legacy \
     nix-system \
     nix-filesystem
 

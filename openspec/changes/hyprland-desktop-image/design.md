@@ -101,7 +101,7 @@ The image provides what makes this sequence possible. Idle timeouts and hypridle
 
 ### D7: Nix is multi-user, stored in `/var/nix`, bind-mounted at `/nix`
 
-- **Build time:** install `nix`, `nix-daemon`, `nix-system` and `nix-filesystem`. The RPM-created `/nix` directory in the image is the empty, read-only mountpoint. Nothing under it in the image matters because the mount hides it.
+- **Build time:** install `nix`, `nix-daemon`, `nix-system` and `nix-filesystem`. Because Bazzite disables weak dependencies, the two packages Fedora's Nix only recommends are installed explicitly: `busybox`, which Fedora's Nix uses as the build sandbox's `/bin/sh` (`sandbox-paths = /bin/sh=/usr/bin/busybox`, so every local build fails without it), and `nix-legacy` (`nix-env`, `nix-store`, `nix-collect-garbage` and so on, which home-manager's activation needs). The RPM-created `/nix` directory in the image is the empty, read-only mountpoint. Nothing under it in the image matters because the mount hides it.
 - **Runtime:** a `nix.mount` unit binds `/var/nix` onto `/nix`. It's ordered before `nix-daemon.socket` and before `systemd-tmpfiles-setup.service`, so the RPM's tmpfiles rules populate `/nix/var/...` inside the persistent store. A tmpfiles rule creates `/var/nix` itself. Because the mount runs before `systemd-tmpfiles-setup.service`, a small early oneshot (`nix-var-dir.service`, ordered before `nix.mount`) applies that one rule first.
 - **Config:** `/etc/nix/nix.conf` sets `experimental-features = nix-command flakes` and `trusted-users = root @wheel`, and adds the nix-community binary cache (emacs-overlay).
 - **Units:** `nix-daemon.socket` is enabled.

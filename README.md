@@ -104,6 +104,8 @@ nix run nixpkgs#hello
 nix run home-manager -- switch --flake ~/.config/home-manager
 ```
 
+On an account that has never used Nix, run `nix profile list` once before the first `home-manager switch`. It creates `~/.local/state/nix/profiles`, which home-manager expects to exist.
+
 The store and all profiles live in `/var/nix`. That's shared by every deployment, so it survives `bootc upgrade` and `bootc rollback`. Garbage collection is up to you (`nix-collect-garbage`, or `nix.gc` in home-manager).
 
 ### Containers that share the host store
