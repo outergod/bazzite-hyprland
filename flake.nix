@@ -20,6 +20,7 @@
         {
           default = pkgs.mkShellNoCC {
             packages = with pkgs; [
+              cosign
               gh
               just
             ];
