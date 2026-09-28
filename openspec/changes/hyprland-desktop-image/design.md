@@ -134,7 +134,7 @@ This works rootless:
 - The daemon sees the caller's real host UID.
 - Toolbox disables SELinux labeling for containers.
 
-The image ships a `ujust` recipe (`ujust nix-toolbox`) that creates the container with `/nix` mounted read-only from the host. It uses distrobox, because `toolbox create` can't add volumes; the target host's `nix-toolbox-44` is already a distrobox container, and Bazzite's own `ujust` recipes use distrobox too. The recipe's container image is a parameter, defaulting to Fedora's toolbox image; the Nix client comes from the user's HM profile or the daemon-backed `nix` on the host.
+The image ships a `ujust` recipe (`ujust nix-toolbox`) that creates the container with `/nix` and `/etc/nix` mounted read-only from the host. The second mount gives the container's Nix client the host's settings; without it, the client finds no `nix.conf` and runs with defaults (no `nix-command` or flakes, and only cache.nixos.org). It uses distrobox, because `toolbox create` can't add volumes; the target host's `nix-toolbox-44` is already a distrobox container, and Bazzite's own `ujust` recipes use distrobox too. The recipe's container image is a parameter, defaulting to Fedora's toolbox image; the Nix client comes from the user's HM profile or the daemon-backed `nix` on the host.
 
 Alternative: separate stores per environment. Rejected because profile links, HM generations and HM-managed dotfiles in the shared `$HOME` can only point into one store, so the environments would overwrite each other's links.
 

@@ -110,7 +110,7 @@ The store and all profiles live in `/var/nix`. That's shared by every deployment
 
 ### Containers that share the host store
 
-`ujust nix-toolbox` creates a [distrobox](https://distrobox.it/) container that mounts the host's `/nix` read-only. Nix inside it uses the host daemon, so builds land in the host store, and the tools and dotfiles from your home-manager profile work inside the container.
+`ujust nix-toolbox` creates a [distrobox](https://distrobox.it/) container that mounts the host's `/nix` and `/etc/nix` read-only. Nix inside it uses the host daemon and the host's settings (flakes, binary caches), so builds land in the host store, and the tools and dotfiles from your home-manager profile work inside the container.
 
 ```bash
 ujust nix-toolbox                # container "nix" from Fedora's toolbox image
