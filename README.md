@@ -5,7 +5,7 @@ A [Bazzite](https://bazzite.gg/) GNOME image with [Hyprland](https://hyprland.or
 - **Base:** `ghcr.io/ublue-os/bazzite-gnome:stable`, with Bazzite's kernel, drivers, Steam, gamescope and Homebrew unchanged.
 - **Login:** SDDM with a Wayland greeter and the [sddm-astronaut](https://github.com/Keyitdev/sddm-astronaut-theme) theme. There is no autologin; every session starts with a password.
 - **Sessions:** *Hyprland (uwsm-managed)* is the default. *GNOME* stays available as a fallback, and plain *Hyprland* (without uwsm) is there for debugging. SDDM remembers the last session you picked.
-- **Hyprland stack:** Hyprland, hyprlock, hypridle, xdg-desktop-portal-hyprland, hyprpolkitagent and uwsm, from the [`lionheartp/Hyprland`](https://copr.fedorainfracloud.org/coprs/lionheartp/Hyprland/) COPR. The COPR is only enabled while the image is built.
+- **Hyprland stack:** Hyprland (with hyprland-guiutils), hyprlock, hypridle, xdg-desktop-portal-hyprland, hyprpolkitagent and uwsm, from the [`lionheartp/Hyprland`](https://copr.fedorainfracloud.org/coprs/lionheartp/Hyprland/) COPR. The COPR is only enabled while the image is built.
 - **Nix:** Fedora's Nix packages with `nix-daemon`, flakes enabled, and the store in `/var/nix`, bind-mounted at `/nix` so it survives image updates and rollbacks. `@wheel` users are trusted, and the nix-community binary cache is configured.
 
 The image does **not** ship a Hyprland configuration or any desktop userland (launcher, bar, notifications, wallpaper, terminal). All of that, including every config file, is meant to come from your [home-manager](https://github.com/nix-community/home-manager) configuration.
@@ -35,7 +35,7 @@ A component belongs in the **image** if any of these hold:
 
 | Component | Where |
 |---|---|
-| hyprland, uwsm, xdg-desktop-portal-hyprland | image |
+| hyprland, hyprland-guiutils, uwsm, xdg-desktop-portal-hyprland | image |
 | hyprlock, hyprpolkitagent, SDDM | image |
 | hypridle | image (ships with hyprlock, and it's what enforces locking) |
 | gnome-keyring, gamescope, Steam | image (from Bazzite) |

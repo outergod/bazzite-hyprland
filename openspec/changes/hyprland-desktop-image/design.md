@@ -49,7 +49,7 @@ Everything else comes from **home-manager**, including every configuration file.
 
 | Component | Where | Why |
 |---|---|---|
-| hyprland, uwsm, xdg-desktop-portal-hyprland | image | rule 2 |
+| hyprland, hyprland-guiutils, uwsm, hyprland-uwsm, xdg-desktop-portal-hyprland | image | rule 2 |
 | hyprlock, hyprpolkitagent, sddm | image | rule 1 |
 | hypridle | image | Not strictly required, but it ships alongside hyprlock from the same source so they stay compatible, and hypridle is what enforces the screen-lock guarantee |
 | gnome-keyring, gamescope, steam | image (already in base) | rules 1 and 3 |
@@ -60,7 +60,7 @@ Alternative considered: installing Hyprland from Nix. Rejected because the user 
 
 ### D3: Hyprland stack from the `lionheartp/Hyprland` COPR
 
-The Hyprland wiki names it as the Fedora source, and it has current F44 builds of every component we need (hyprland 0.56.2, hyprlock 0.9.6, hypridle 0.1.8, xdg-desktop-portal-hyprland 1.4.1, hyprpolkitagent 0.2.0, uwsm 0.27.0, aquamarine 0.15.1). The COPR is enabled only for the install step and disabled afterwards, following the template's pattern, so the running system doesn't pull from it outside image builds. The whole stack comes from this one COPR so its components never mix with another source's builds.
+The Hyprland wiki names it as the Fedora source, and it has current F44 builds of every component we need (hyprland 0.56.2, hyprlock 0.9.6, hypridle 0.1.8, xdg-desktop-portal-hyprland 1.4.1, hyprpolkitagent 0.2.0, uwsm 0.27.0, aquamarine 0.15.1). The COPR is enabled only for the install step and disabled afterwards, following the template's pattern, so the running system doesn't pull from it outside image builds. The whole stack comes from this one COPR so its components never mix with another source's builds. Bazzite sets `install_weak_deps=False`, and `hyprland` only recommends two pieces the session needs, so they're installed explicitly: `hyprland-guiutils` (Hyprland's own dialogs, such as the not-responding and permission prompts; it warns at startup when it's missing) and `hyprland-uwsm` (the uwsm session entry). Its other recommendations (kitty, wofi, brightnessctl, playerctl, hyprpicker) are userland and stay out of the image.
 
 Alternatives:
 - `sdegler/hyprland` is equally current but not referenced by the wiki.
@@ -82,7 +82,7 @@ Alternatives: greetd + ReGreet (the user dislikes the look), greetd + tuigreet, 
 
 ### D5: Hyprland starts through uwsm, which also carries the Nix environment into the session
 
-The default SDDM session is the uwsm-wrapped Hyprland entry (`hyprland-uwsm.desktop`). Neither the COPR's packages nor upstream Hyprland 0.56 ship it any more, so the image does, running `uwsm start -e -D Hyprland hyprland.desktop`. uwsm builds the session environment from a login shell (sh), which picks up `/etc/profile.d/nix-daemon.sh`. That gives `PATH` and `XDG_DATA_DIRS` the Nix profile, so the launcher sees apps installed through Nix. uwsm also starts `graphical-session.target`, which is what the user's HM systemd user units (hypridle, wallpaper, emacs, ...) should be `WantedBy`.
+The default SDDM session is the uwsm-wrapped Hyprland entry (`hyprland-uwsm.desktop`), shipped by the COPR's `hyprland-uwsm` subpackage. uwsm builds the session environment from a login shell (sh), which picks up `/etc/profile.d/nix-daemon.sh`. That gives `PATH` and `XDG_DATA_DIRS` the Nix profile, so the launcher sees apps installed through Nix. uwsm also starts `graphical-session.target`, which is what the user's HM systemd user units (hypridle, wallpaper, emacs, ...) should be `WantedBy`.
 
 The HM Hyprland module must use `systemd.enable = false`, as the wiki advises for uwsm. `hm-session-vars.sh` reaches the session through the user's POSIX profile, which HM manages. The plain `hyprland.desktop` session stays available as a debugging fallback.
 
