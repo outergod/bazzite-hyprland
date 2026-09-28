@@ -4,16 +4,7 @@ COPY build_files /
 COPY system_files /system_files
 
 # Base Image
-FROM ghcr.io/ublue-os/bazzite:stable@sha256:9556db65991d57a03a7dc18e4ba28a686d8bcdcd6b61235aa69c8267bb22ff76
-## Other possible base images include:
-# FROM ghcr.io/ublue-os/bazzite:testing
-# FROM ghcr.io/ublue-os/aurora:stable
-# FROM ghcr.io/ublue-os/bluefin-nvidia-open:stable
-# 
-# ... and so on, here are more base images
-# Universal Blue Images: https://github.com/orgs/ublue-os/packages
-# Fedora base image: quay.io/fedora/fedora-bootc:44
-# CentOS base images: quay.io/centos-bootc/centos-bootc:stream10
+FROM ghcr.io/ublue-os/bazzite-gnome:stable@sha256:69c3c23089b45eb42c58545ab1703bbc1f732b6d0d103910fc1a29b7fe18b0f2
 
 ### [IM]MUTABLE /opt
 ## Some bootable images, like Fedora, have /opt symlinked to /var/opt, in order to
