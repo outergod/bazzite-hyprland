@@ -17,5 +17,23 @@
       "matchDepTypes": ["container"],
       "matchFileNames": [".github/workflows/**.yaml", ".github/workflows/**.yml"],
     },
+    {
+      // Bazzite's dated tags (stable-<fedora>.<yyyymmdd>[.<n>]) give the
+      // base image versions: a new build date is a minor update, a new
+      // Fedora release a major one. Floating tags such as stable and
+      // stable-45 don't match.
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["ghcr.io/ublue-os/bazzite-gnome"],
+      "versioning": "regex:^stable-(?<major>\\d+)\\.(?<minor>\\d{8})(\\.(?<patch>\\d+))?$",
+    },
+    {
+      // Rebasing on a new Fedora release waits for approval on the
+      // Dependency Dashboard.
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["ghcr.io/ublue-os/bazzite-gnome"],
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true,
+      "labels": ["fedora-major"],
+    },
   ]
 }
