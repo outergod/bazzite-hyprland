@@ -1,5 +1,6 @@
 #!/bin/bash
-# Display manager: SDDM with a Wayland (weston) greeter replaces GDM.
+# Display manager: SDDM with a Wayland (weston) greeter replaces GDM. Also
+# starts the Secret Service in Hyprland sessions.
 # Sourced by build.sh.
 
 # Qt6 modules imported by the theme's QML
@@ -24,3 +25,10 @@ rm -rf "${SDDM_THEME_DIR}/.github" "${SDDM_THEME_DIR}/setup.sh"
 # Disabling GDM removes its display-manager.service alias so SDDM can take it
 systemctl disable gdm.service
 systemctl enable sddm.service
+
+# Secret Service: Fedora's pam_oo7 hands the login password to a helper that
+# waits 120 s for oo7-daemon, which then unlocks the login keyring. GNOME
+# starts the daemon from gnome-session-services.target; Hyprland sessions need
+# graphical-session.target to pull it in. default.target isn't enough: it is
+# reached once per user manager, which can outlive a logout.
+systemctl --global add-wants graphical-session.target oo7-daemon.service

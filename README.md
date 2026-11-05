@@ -38,7 +38,7 @@ A component belongs in the **image** if any of these hold:
 | hyprland, hyprland-guiutils, uwsm, xdg-desktop-portal-hyprland | image |
 | hyprlock, hyprpolkitagent, SDDM | image |
 | hypridle | image (ships with hyprlock, and it's what enforces locking) |
-| gnome-keyring, gamescope, Steam | image (from Bazzite) |
+| oo7 (Secret Service), gamescope, Steam | image (from Bazzite) |
 | launcher, bar, notifier, wallpaper, terminal, fonts, themes | home-manager |
 | `hyprland.lua`/`hyprland.conf`, `hyprlock.conf`, `hypridle.conf`, uwsm env | home-manager |
 
