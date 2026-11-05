@@ -1,7 +1,7 @@
 ## 1. Image
 
-- [ ] 1.1 Add `system_files/usr/share/polkit-1/actions/com.bitwarden.Bitwarden.policy` with the policy from design.md D2 (full XML with declaration and DOCTYPE), byte-identical to the one the Bitwarden flatpak embeds. Verify `xmllint --noout` accepts it and `diff` against `/etc/polkit-1/actions/com.bitwarden.Bitwarden.policy` on the host shows no difference.
-- [ ] 1.2 Build the image with `just build`. Verify `podman run --rm localhost/bazzite-hyprland cat /usr/share/polkit-1/actions/com.bitwarden.Bitwarden.policy` prints the policy, and `bootc container lint` passes as part of the build.
+- [x] 1.1 Add `system_files/usr/share/polkit-1/actions/com.bitwarden.Bitwarden.policy` with the policy from design.md D2 (full XML with declaration and DOCTYPE), byte-identical to the one the Bitwarden flatpak embeds. Verify `xmllint --noout` accepts it and `diff` against `/etc/polkit-1/actions/com.bitwarden.Bitwarden.policy` on the host shows no difference.
+- [x] 1.2 Build the image with `just build`. Verify `podman run --rm localhost/bazzite-hyprland cat /usr/share/polkit-1/actions/com.bitwarden.Bitwarden.policy` prints the policy, and `bootc container lint` passes as part of the build.
 
 ## 2. Host migration
 
