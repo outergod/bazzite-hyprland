@@ -4,7 +4,7 @@ COPY build_files /
 COPY system_files /system_files
 
 # Base Image
-FROM ghcr.io/ublue-os/bazzite-gnome:stable-45.20261111@sha256:d910619ace8028499df296fc11e5ccad2deb80c8fc8e509bb754c1757cc45488
+FROM ghcr.io/ublue-os/bazzite-gnome:stable-45.20261112@sha256:8c289ca38a84760fc40b4965f7c1cfb8a7c5fc00200c378bac6e34a671227b22
 
 ### [IM]MUTABLE /opt
 ## Some bootable images, like Fedora, have /opt symlinked to /var/opt, in order to
